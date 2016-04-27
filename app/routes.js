@@ -15,7 +15,7 @@ module.exports = function(app) {
     console.log('hi!!!');
     console.log(req);
     console.log('**********************');
-    console.log(req.data.url);
+    console.log(req.body);
 
     var data = {url: "dummy data", starred: false};
 
