@@ -10,21 +10,19 @@ angular
       self.slinks = slinks;
 
 
-      self.sendSlinks();
+      self.sendSlinks("string");
     })
 
-    self.sendSlinks = function() {
-      var slink = new SlinkFactory('DUMMY SLINK');
-      var req = {
-        method: 'POST',
-        url: '/slinks',
-        headers: {
-          'Content-Type': undefined
-        },
-        data: { object: slink }
-      };
+    self.sendSlinks = function(slink) {
+      var params = JSON.stringify({ "hello": slink })
+      // var req = {
+      //   method: 'POST',
+      //   url: 'http://requestb.in/ym7vyqym',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   data: data
+      // };
 
-      $http(req).then(function success(res) {
+      $http.post('http://requestb.in/ym7vyqym', params).then(function success(res) {
         console.log("SUCCESS" + res);
         console.log(res);
       }), function error(res) {

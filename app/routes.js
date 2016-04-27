@@ -1,5 +1,6 @@
 module.exports = function(app) {
 
+  var express = require('express');
   var path = require('path');
   var pg = require('pg');
   var connectionString = 'postgres://localhost/slinks';
@@ -12,17 +13,18 @@ module.exports = function(app) {
 
   app.post('/slinks', function (req, res) {
     var results = [];
-    console.log('hi!!!');
     console.log(req);
     console.log('**********************');
     console.log(req.body);
+    console.log(req.object);
+    console.log(req.data);
 
-    var data = {url: "dummy data", starred: false};
+    var data = { url: "meh", starred: false };
 
     pg.connect(connectionString, function(err, client, done) {
       if(err) {
         done();
-        return res.status(500).json({ success: false, data: err});
+        return res.status(500).json({ success: false, data: err });
       }
 
       client.query("INSERT INTO slinks(url, starred) values($1, $2)", [data.url, data.starred]);
@@ -37,8 +39,6 @@ module.exports = function(app) {
     });
 
   });
-
-
 
   app.get('/slinks', function(req, res) {
     _requestToSlack().then(function(slinksData) {
