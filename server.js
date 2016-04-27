@@ -1,8 +1,10 @@
 var express = require('express');
 var app = express();
-var routes = require('./app/routes.js')(app);
 var path = require('path');
 var cookieParser = require('cookie-parser')
+
+var routes = require('./routes/routes.js')(app);
+
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(cookieParser());
