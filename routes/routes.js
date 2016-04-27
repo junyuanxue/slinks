@@ -11,13 +11,22 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  var models = require('../models/index')
 
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
   });
 
   app.post('/slinks', function (req, res) {
-    
+    console.log(req);
+    console.log(req.body.url);
+    var slink = models.Slink.create({
+      url: req.body.url,
+      starred: false
+    }).then(function(slink) {
+      res.json(slink);
+    });
+    console.log(slink);
   });
 
   app.get('/slinks', function(req, res) {
