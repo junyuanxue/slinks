@@ -3,31 +3,26 @@ angular
   .controller('SlinksController', ['$http', 'SlinksService', 'SlinkFactory', function($http, SlinksService, SlinkFactory) {
     var self = this;
 
-    self.slinks = [new SlinkFactory('https://slack.com/')];
+    self.slinks = [];
 
     SlinksService.getSlinks().then(function(slinks) {
-    	var slinks = Array.prototype.concat.apply([],slinks)
+    	var slinks = Array.prototype.concat.apply([],slinks);
       self.slinks = slinks;
-
-
-      self.sendSlinks("string");
+      _sendEachSlinkToDb(self.slinks);
     })
 
-    self.sendSlinks = function(slink) {
-      var params = JSON.stringify({ "hello": slink })
-      // var req = {
-      //   method: 'POST',
-      //   url: 'http://requestb.in/ym7vyqym',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   data: data
-      // };
+    function _sendEachSlinkToDb(slinks) {
+      slinks.forEach(_postToDb);
+    }
 
-      $http.post('http://requestb.in/ym7vyqym', params).then(function success(res) {
-        console.log("SUCCESS" + res);
-        console.log(res);
-      }), function error(res) {
-        console.log("FAIL" + res);
-      }
+    function _postToDb(slink) {
+      var req = {
+        method: 'POST',
+        url: '/slinks',
+        headers: { 'Content-Type': 'application/json' },
+        data: { url: slink.url }
+      };
 
+      $http(req);
     }
   }])

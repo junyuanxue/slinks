@@ -7,19 +7,18 @@ module.exports = function(app) {
   var request = require('request');
   var token = process.env.SLACK_API_TOKEN;
 
+  var bodyParser = require('body-parser');
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+
+
   app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
   });
 
   app.post('/slinks', function (req, res) {
     var results = [];
-    console.log(req);
-    console.log('**********************');
-    console.log(req.body);
-    console.log(req.object);
-    console.log(req.data);
-
-    var data = { url: "meh", starred: false };
+    var data = { url: req.body.url, starred: false };
 
     pg.connect(connectionString, function(err, client, done) {
       if(err) {
@@ -37,7 +36,6 @@ module.exports = function(app) {
         return res.json(results);
       });
     });
-
   });
 
   app.get('/slinks', function(req, res) {
@@ -66,6 +64,4 @@ module.exports = function(app) {
       });
     });
   };
-
-
 };
