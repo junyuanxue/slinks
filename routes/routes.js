@@ -17,25 +17,7 @@ module.exports = function(app) {
   });
 
   app.post('/slinks', function (req, res) {
-    var results = [];
-    var data = { url: req.body.url, starred: false };
-
-    pg.connect(connectionString, function(err, client, done) {
-      if(err) {
-        done();
-        return res.status(500).json({ success: false, data: err });
-      }
-
-      client.query("INSERT INTO slinks(url, starred) values($1, $2)", [data.url, data.starred]);
-      var query = client.query("SELECT * FROM slinks ORDER BY id ASC");
-      query.on('row', function(row) {
-        results.push(row);
-      });
-      query.on('end', function() {
-        done();
-        return res.json(results);
-      });
-    });
+    
   });
 
   app.get('/slinks', function(req, res) {
