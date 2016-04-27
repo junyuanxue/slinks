@@ -23,10 +23,6 @@ angular
         data: { url: slink.url }
       };
 
-      $http(req).then(function success(res) {
-        console.log("success" + res)
-      }, function error(res) {
-        console.log("error");
-      });
+      $http(req);
     }
   }])

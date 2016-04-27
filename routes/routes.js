@@ -18,15 +18,12 @@ module.exports = function(app) {
   });
 
   app.post('/slinks', function (req, res) {
-    console.log(req);
-    console.log(req.body.url);
-    var slink = models.Slink.create({
+    models.Slink.create({
       url: req.body.url,
       starred: false
     }).then(function(slink) {
       res.json(slink);
     });
-    console.log(slink);
   });
 
   app.get('/slinks', function(req, res) {
