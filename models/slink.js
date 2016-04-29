@@ -12,3 +12,7 @@ module.exports = function(sequelize, DataTypes) {
   });
   return Slink;
 };
+
+// return db contents for slink
+
+// change

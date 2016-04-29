@@ -24,7 +24,7 @@
     <div ng-controller="SlinksController as ctrl">
       <ul id="slinks" ng-repeat="slink in ctrl.slinks">
         <li>
-          <input type="checkbox">
+          <input type="checkbox" ng-click="ctrl.starLink(slink.id)" >
           <a href="{{ slink.url }}">{{ slink.url }}</a>
         </li>
       </ul>

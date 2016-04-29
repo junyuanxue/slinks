@@ -18,10 +18,27 @@ module.exports = function(app) {
   });
 
   app.post('/slinks', function(req,res){
-    models.Slink.findOrCreate({ 
-      where: { url: req.body.url }, 
-      defaults: { starred: false } 
-    }); 
+    models.Slink.findOrCreate({
+      where: { url: req.body.url },
+      defaults: { starred: false }
+    });
+  });
+
+  app.put('/slinks/:id', function(req, res) {
+    console.log("*************="+req.body.link);
+    models.Slink.find({
+      where: {
+        id: req.body.link
+      }
+    }).then(function(slink){
+      if(slink){
+        slink.updateAttributes({
+          starred: true
+        }).then(function(slink){
+          res.send(slink);
+        });
+      }
+    });
   });
 
   app.get('/slinks', function(req, res) {
